@@ -50,14 +50,14 @@ class LXeTrajectory : public G4Trajectory
     LXeTrajectory(const G4Track* aTrack);
     LXeTrajectory(LXeTrajectory &);
     virtual ~LXeTrajectory();
- 
+
     virtual void DrawTrajectory() const;
- 
+
     inline void* operator new(size_t);
     inline void  operator delete(void*);
 
     void SetDrawTrajectory(G4bool b){fDrawit=b;}
-    void WLS(){fWls=true;}
+    //void WLS(){fWls=true;}
     void SetForceDrawTrajectory(G4bool b){fForceDraw=b;}
     void SetForceNoDrawTrajectory(G4bool b){fForceNoDraw=b;}
 

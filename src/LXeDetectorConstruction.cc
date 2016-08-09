@@ -3,7 +3,7 @@
 #include "LXeScintSD.hh"
 #include "LXeDetectorMessenger.hh"
 #include "LXeMainVolume.hh"
-#include "LXeWLSSlab.hh"
+//#include "LXeWLSSlab.hh"
 
 #include "G4SDManager.hh"
 #include "G4RunManager.hh"
