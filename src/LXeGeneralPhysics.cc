@@ -1,78 +1,48 @@
-//
-// ********************************************************************
-// * License and Disclaimer                                           *
-// *                                                                  *
-// * The  Geant4 software  is  copyright of the Copyright Holders  of *
-// * the Geant4 Collaboration.  It is provided  under  the terms  and *
-// * conditions of the Geant4 Software License,  included in the file *
-// * LICENSE and available at  http://cern.ch/geant4/license .  These *
-// * include a list of copyright holders.                             *
-// *                                                                  *
-// * Neither the authors of this software system, nor their employing *
-// * institutes,nor the agencies providing financial support for this *
-// * work  make  any representation or  warranty, express or implied, *
-// * regarding  this  software system or assume any liability for its *
-// * use.  Please see the license in the file  LICENSE  and URL above *
-// * for the full disclaimer and the limitation of liability.         *
-// *                                                                  *
-// * This  code  implementation is the result of  the  scientific and *
-// * technical work of the GEANT4 collaboration.                      *
-// * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
-// * use  in  resulting  scientific  publications,  and indicate your *
-// * acceptance of all terms of the Geant4 Software license.          *
-// ********************************************************************
-//
-// $Id: LXeGeneralPhysics.cc 81557 2014-06-03 08:32:44Z gcosmo $
-//
-/// \file optical/LXe/src/LXeGeneralPhysics.cc
-/// \brief Implementation of the LXeGeneralPhysics class
-//
-//
 #include "LXeGeneralPhysics.hh"
 
 #include "globals.hh"
 #include "G4ios.hh"
 #include <iomanip>
-#include "G4Decay.hh"
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-LXeGeneralPhysics::LXeGeneralPhysics(const G4String& name)
-                     :  G4VPhysicsConstructor(name) {}
+LXeGeneralPhysics::LXeGeneralPhysics(const G4String& name) : G4VPhysicsConstructor(name) {}
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-LXeGeneralPhysics::~LXeGeneralPhysics() {
-  //fDecayProcess = NULL;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+LXeGeneralPhysics::~LXeGeneralPhysics() {}
 
 #include "G4ParticleDefinition.hh"
 #include "G4ProcessManager.hh"
 
-#include "G4Geantino.hh"
-#include "G4ChargedGeantino.hh"
+//#include "G4Geantino.hh"
+//#include "G4ChargedGeantino.hh"
+//#include "G4GenericIon.hh"
+//#include "G4Proton.hh"
 
-#include "G4GenericIon.hh"
-
+#include "G4Neutron.hh"
 #include "G4Proton.hh"
+#include "G4GenericIon.hh"
 
 void LXeGeneralPhysics::ConstructParticle()
 {
   // pseudo-particles
-  G4Geantino::GeantinoDefinition();
-  G4ChargedGeantino::ChargedGeantinoDefinition();
-
+  //G4Geantino::GeantinoDefinition();
+  //G4ChargedGeantino::ChargedGeantinoDefinition();
+  //G4GenericIon::GenericIonDefinition();
+  G4Neutron::NeutronDefinition();
+  G4Proton::ProtonDefinition();
   G4GenericIon::GenericIonDefinition();
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void LXeGeneralPhysics::ConstructProcess()
-{
+//#include "G4NeutronElasticProcess.hh"
+//#include "G4ProtonElasticProcess.hh"
+#include "G4HadronElasticProcess.hh"
+#include "G4NeutronInelasticProcess.hh"
+#include "G4ProtonInelasticProcess.hh"
+#include "G4HadronInelasticProcess.hh"
+
+void LXeGeneralPhysics::ConstructProcess() {
+
+  /*
   G4Decay* fDecayProcess = new G4Decay();
-
   // Add Decay Process
   aParticleIterator->reset();
   while( (*aParticleIterator)() ){
@@ -85,4 +55,75 @@ void LXeGeneralPhysics::ConstructProcess()
       pmanager ->SetProcessOrdering(fDecayProcess, idxAtRest);
     }
   }
+  */
+
+/*
+  G4NeutronElasticProcess *fNeutronElasticProcess = new G4NeutronElasticProcess();
+  aParticleIterator->reset();
+  while( (*aParticleIterator)() ){
+    G4ParticleDefinition* particle = aParticleIterator->value();
+    G4ProcessManager* pmanager = particle->GetProcessManager();
+    if (fNeutronElasticProcess->IsApplicable(*particle)) {
+      pmanager ->AddDiscreteProcess(fNeutronElasticProcess);
+      // set ordering for PostStepDoIt and AtRestDoIt
+      //pmanager ->SetProcessOrdering(fNeutronElasticProcess, idxPostStep);
+      //pmanager ->SetProcessOrdering(fNeutronElasticProcess, idxAtRest);
+    }
+  }
+*/
+/*
+  G4ProtonElasticProcess *fProtonElasticProcess = new G4ProtonElasticProcess();
+  aParticleIterator->reset();
+  while( (*aParticleIterator)() ){
+    G4ParticleDefinition* particle = aParticleIterator->value();
+    G4ProcessManager* pmanager = particle->GetProcessManager();
+    if (fProtonElasticProcess->IsApplicable(*particle)) {
+      pmanager ->AddDiscreteProcess(fProtonElasticProcess);
+      // set ordering for PostStepDoIt and AtRestDoIt
+      //pmanager ->SetProcessOrdering(fProtonElasticProcess, idxPostStep);
+      //pmanager ->SetProcessOrdering(fProtonElasticProcess, idxAtRest);
+    }
+  }
+*/
+
+  G4HadronElasticProcess *fHadronElasticProcess = new G4HadronElasticProcess();
+  aParticleIterator->reset();
+  while( (*aParticleIterator)() ){
+    G4ParticleDefinition* particle = aParticleIterator->value();
+    G4ProcessManager* pmanager = particle->GetProcessManager();
+    if (fHadronElasticProcess->IsApplicable(*particle)) {
+      pmanager ->AddDiscreteProcess(fHadronElasticProcess);
+      // set ordering for PostStepDoIt and AtRestDoIt
+      //pmanager ->SetProcessOrdering(fHadronElasticProcess, idxPostStep);
+      //pmanager ->SetProcessOrdering(fHadronElasticProcess, idxAtRest);
+    }
+  }
+
+/*
+  G4NeutronInelasticProcess *fNeutronInelasticProcess = new G4NeutronInelasticProcess();
+  aParticleIterator->reset();
+  while( (*aParticleIterator)() ){
+    G4ParticleDefinition* particle = aParticleIterator->value();
+    G4ProcessManager* pmanager = particle->GetProcessManager();
+    if (fNeutronInelasticProcess->IsApplicable(*particle)) {
+      pmanager ->AddProcess(fNeutronInelasticProcess);
+      // set ordering for PostStepDoIt and AtRestDoIt
+      //pmanager ->SetProcessOrdering(fNeutronInelasticProcess, idxPostStep);
+      //pmanager ->SetProcessOrdering(fNeutronInelasticProcess, idxAtRest);
+    }
+  }
+
+  G4ProtonInelasticProcess *fProtonInelasticProcess = new G4ProtonInelasticProcess();
+  aParticleIterator->reset();
+  while( (*aParticleIterator)() ){
+    G4ParticleDefinition* particle = aParticleIterator->value();
+    G4ProcessManager* pmanager = particle->GetProcessManager();
+    if (fProtonInelasticProcess->IsApplicable(*particle)) {
+      pmanager ->AddDiscreteProcess(fProtonInelasticProcess);
+      // set ordering for PostStepDoIt and AtRestDoIt
+      //pmanager ->SetProcessOrdering(fProtonInelasticProcess, idxPostStep);
+      //pmanager ->SetProcessOrdering(fProtonInelasticProcess, idxAtRest);
+    }
+  }
+*/
 }

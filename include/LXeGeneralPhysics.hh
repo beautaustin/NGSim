@@ -47,7 +47,7 @@ class LXeGeneralPhysics : public G4VPhysicsConstructor
     // This method will be invoked in the Construct() method.
     // each particle type will be instantiated
     virtual void ConstructParticle();
- 
+
     // This method will be invoked in the Construct() method.
     // each physics process will be instantiated and
     // registered to the process manager of each particle type
