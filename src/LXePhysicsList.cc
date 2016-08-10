@@ -33,7 +33,7 @@
 
 #include "LXeGeneralPhysics.hh"
 #include "LXeEMPhysics.hh"
-#include "LXeMuonPhysics.hh"
+//#include "LXeMuonPhysics.hh"
 
 #include "G4OpticalPhysics.hh"
 #include "G4OpticalProcessIndex.hh"
@@ -54,7 +54,7 @@ LXePhysicsList::LXePhysicsList() : G4VModularPhysicsList()
   RegisterPhysics( new LXeEMPhysics("standard EM"));
 
   // Muon Physics
-  RegisterPhysics( new LXeMuonPhysics("muon"));
+  // RegisterPhysics( new LXeMuonPhysics("muon"));
 
   // Optical Physics
   G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();

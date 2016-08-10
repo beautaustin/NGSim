@@ -34,7 +34,7 @@
 #include "globals.hh"
 #include "G4ios.hh"
 #include <iomanip>
-#include "G4Decay.hh"
+//#include "G4Decay.hh"
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 LXeGeneralPhysics::LXeGeneralPhysics(const G4String& name)
@@ -51,26 +51,28 @@ LXeGeneralPhysics::~LXeGeneralPhysics() {
 #include "G4ParticleDefinition.hh"
 #include "G4ProcessManager.hh"
 
-#include "G4Geantino.hh"
-#include "G4ChargedGeantino.hh"
+//#include "G4Geantino.hh"
+//#include "G4ChargedGeantino.hh"
 
-#include "G4GenericIon.hh"
+//#include "G4GenericIon.hh"
 
-#include "G4Proton.hh"
+//#include "G4Proton.hh"
 
 void LXeGeneralPhysics::ConstructParticle()
 {
   // pseudo-particles
-  G4Geantino::GeantinoDefinition();
-  G4ChargedGeantino::ChargedGeantinoDefinition();
+  //G4Geantino::GeantinoDefinition();
+  //G4ChargedGeantino::ChargedGeantinoDefinition();
 
-  G4GenericIon::GenericIonDefinition();
+  //G4GenericIon::GenericIonDefinition();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void LXeGeneralPhysics::ConstructProcess()
 {
+
+  /*
   G4Decay* fDecayProcess = new G4Decay();
 
   // Add Decay Process
@@ -85,4 +87,9 @@ void LXeGeneralPhysics::ConstructProcess()
       pmanager ->SetProcessOrdering(fDecayProcess, idxAtRest);
     }
   }
+  */
+
+
+
+
 }
