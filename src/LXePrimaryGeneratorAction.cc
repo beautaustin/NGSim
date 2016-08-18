@@ -49,7 +49,7 @@ LXePrimaryGeneratorAction::LXePrimaryGeneratorAction(){
   G4String particleName;
   fParticleGun->SetParticleDefinition(particleTable->FindParticle(particleName="gamma"));
   //Default energy,position,momentum
-  fParticleGun->SetParticleEnergy(511.*keV);
+  fParticleGun->SetParticleEnergy(100.*keV);
   fParticleGun->SetParticlePosition(G4ThreeVector(0.0 , 0.0, -20.0*cm));
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
 }

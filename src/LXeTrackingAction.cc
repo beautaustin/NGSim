@@ -58,9 +58,8 @@ void LXeTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
   fpTrackingManager->SetUserTrackInformation(new LXeUserTrackInformation);
 
   const G4VProcess* creator = aTrack->GetCreatorProcess();
-  if(creator)
-    G4cout<<creator->GetProcessName()<<G4endl;
-  
+  if(creator) G4cout<<creator->GetProcessName()<<G4endl;
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -87,7 +86,7 @@ void LXeTrackingAction::PostUserTrackingAction(const G4Track* aTrack){
       }
     }
     else{*/
-      if(trackInformation->GetTrackStatus()&hitPMT)
+      //if(trackInformation->GetTrackStatus()&hitPMT)
         trajectory->SetDrawTrajectory(true);
     /*}*/
   }

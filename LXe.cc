@@ -78,8 +78,8 @@ int main(int argc, char** argv)
   visManager->Initialize();
 #endif
 
-  // runManager->Initialize();
- 
+  runManager->Initialize();
+
   // get the pointer to the UI manager and set verbosities
   G4UImanager* UImanager = G4UImanager::GetUIpointer();
 

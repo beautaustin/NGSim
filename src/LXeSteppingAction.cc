@@ -73,7 +73,7 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
   G4Track* theTrack = theStep->GetTrack();
 
   if ( theTrack->GetCurrentStepNumber() == 1 ) fExpectedNextStatus = Undefined;
- 
+
   LXeUserTrackInformation* trackInformation
     =(LXeUserTrackInformation*)theTrack->GetUserInformation();
   LXeUserEventInformation* eventInformation
@@ -106,7 +106,7 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
 
   if(theTrack->GetParentID()==0){
     //This is a primary track
- 
+
     G4TrackVector* fSecondary=fpSteppingManager->GetfSecondary();
     G4int tN2ndariesTot = fpSteppingManager->GetfN2ndariesAtRestDoIt()
       + fpSteppingManager->GetfN2ndariesAlongStepDoIt()
@@ -142,10 +142,10 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
     //Optical photon only
 
-    if(thePrePV->GetName()=="Slab")
+    //if(thePrePV->GetName()=="Slab")
       //force drawing of photons in WLS slab
-      trackInformation->SetForceDrawTrajectory(true);
-    else if(thePostPV->GetName()=="expHall")
+      //trackInformation->SetForceDrawTrajectory(true);
+    /*else */if(thePostPV->GetName()=="expHall")
       //Kill photons entering expHall from something other than Slab
       theTrack->SetTrackStatus(fStopAndKill);
 

@@ -130,27 +130,44 @@ void LXeDetectorConstruction::DefineMaterials() {
   fLXe->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
 
   // LAr
-  G4double LAr_Energy[]    = { 7.0*eV , 7.07*eV, 7.14*eV };
-  const G4int LArnum = sizeof(LAr_Energy)/sizeof(G4double);
-  G4double LAr_SCINT[] = { 0.1, 1.0, 0.1 };
-  assert(sizeof(LAr_SCINT) == sizeof(LAr_Energy));
-  G4double LAr_RIND[]  = { 1.59 , 1.57, 1.54 };
-  assert(sizeof(LAr_RIND) == sizeof(LAr_Energy));
-  G4double LAr_ABSL[]  = { 35.*cm, 35.*cm, 35.*cm};
-  assert(sizeof(LAr_ABSL) == sizeof(LAr_Energy));
+  // Data taken from LArSOFT
+  G4double LAr_ScintEnergy[] =
+  {6.0*eV, 6.7*eV, 7.1*eV, 7.4*eV, 7.7*eV, 7.9*eV, 8.1*eV, 8.4*eV,
+  8.5*eV, 8.6*eV, 8.8*eV, 9.0*eV, 9.1*eV, 9.4*eV, 9.8*eV, 10.4*eV,
+  10.7*eV};
+  const G4int LArScintNum = sizeof(LAr_ScintEnergy)/sizeof(G4double);
+  G4double LAr_SCINT[] =
+  {0.0,  0.04, 0.12, 0.27, 0.44, 0.62, 0.80, 0.91, 0.92, 0.85, 0.70, 0.50, 0.31, 0.13, 0.04,  0.01, 0.0};
+  assert(sizeof(LAr_SCINT) == sizeof(LAr_ScintEnergy));
+
+  G4double LAr_RIndEnergy[] =
+  {1.900*eV,  2.934*eV,  3.592*eV,  5.566*eV,  6.694*eV,  7.540*eV,  8.574*eV,  9.044*eV,
+  9.232*eV,  9.420*eV,  9.514*eV,  9.608*eV,  9.702*eV,  9.796*eV,  9.890*eV,  9.984*eV,
+  10.08*eV,  10.27*eV,  10.45*eV,  10.74*eV,  10.92*eV};
+  const G4int LArRIndNum = sizeof(LAr_RIndEnergy)/sizeof(G4double);
+  G4double LAr_RIND[]  =
+  {1.232,  1.236,  1.240,  1.261,  1.282,  1.306,  1.353,  1.387,  1.404,  1.423,  1.434,
+  1.446,  1.459,  1.473,  1.488,  1.505,  1.524,  1.569,  1.627,  1.751,  1.879};
+  assert(sizeof(LAr_RIND) == sizeof(LAr_RIndEnergy));
+
+  G4double LAr_AbsLEnergy[] = {4*eV, 5*eV, 6*eV, 7*eV, 8*eV, 9*eV, 10*eV, 11*eV};
+  const G4int LArAbsLNum = sizeof(LAr_AbsLEnergy)/sizeof(G4double);
+  G4double LAr_ABSL[]  = {2000.*cm, 2000.*cm, 2000.*cm, 2000.*cm, 2000.*cm, 2000.*cm, 2000.*cm, 2000.*cm};
+  assert(sizeof(LAr_ABSL) == sizeof(LAr_AbsLEnergy));
+
   fLAr_mt = new G4MaterialPropertiesTable();
-  fLAr_mt->AddProperty("FASTCOMPONENT", LAr_Energy, LAr_SCINT, LArnum);
-  fLAr_mt->AddProperty("SLOWCOMPONENT", LAr_Energy, LAr_SCINT, LArnum);
-  fLAr_mt->AddProperty("RINDEX",        LAr_Energy, LAr_RIND,  LArnum);
-  fLAr_mt->AddProperty("ABSLENGTH",     LAr_Energy, LAr_ABSL,  LArnum);
-  fLAr_mt->AddConstProperty("SCINTILLATIONYIELD",12000./MeV);
+  fLAr_mt->AddProperty("FASTCOMPONENT", LAr_ScintEnergy, LAr_SCINT, LArScintNum);
+  fLAr_mt->AddProperty("SLOWCOMPONENT", LAr_ScintEnergy, LAr_SCINT, LArScintNum);
+  fLAr_mt->AddProperty("RINDEX",        LAr_RIndEnergy, LAr_RIND,  LArRIndNum);
+  fLAr_mt->AddProperty("ABSLENGTH",     LAr_AbsLEnergy, LAr_ABSL,  LArAbsLNum);
+  fLAr_mt->AddConstProperty("SCINTILLATIONYIELD",24000./MeV);
   fLAr_mt->AddConstProperty("RESOLUTIONSCALE",1.0);
-  fLAr_mt->AddConstProperty("FASTTIMECONSTANT",20.*ns);
-  fLAr_mt->AddConstProperty("SLOWTIMECONSTANT",45.*ns);
-  fLAr_mt->AddConstProperty("YIELDRATIO",1.0);
+  fLAr_mt->AddConstProperty("FASTTIMECONSTANT",6.*ns);
+  fLAr_mt->AddConstProperty("SLOWTIMECONSTANT",1590.*ns);
+  fLAr_mt->AddConstProperty("YIELDRATIO",0.3);
   fLAr->SetMaterialPropertiesTable(fLAr_mt);
   // Set the Birks Constant for the LAr scintillator
-  fLAr->GetIonisation()->SetBirksConstant(0.126*mm/MeV);
+  fLAr->GetIonisation()->SetBirksConstant(0.69*mm/MeV);
 
   // Glass
   G4double glass_RIND[]={1.49,1.49,1.49};
