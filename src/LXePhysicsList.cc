@@ -34,6 +34,7 @@
 #include "LXeGeneralPhysics.hh"
 #include "LXeEMPhysics.hh"
 #include "LXeMuonPhysics.hh"
+#include "G4HadronPhysicsQGSP_BERT_HP.hh"
 
 #include "G4OpticalPhysics.hh"
 #include "G4OpticalProcessIndex.hh"
@@ -49,6 +50,10 @@ LXePhysicsList::LXePhysicsList() : G4VModularPhysicsList()
 
   // General Physics
   RegisterPhysics( new LXeGeneralPhysics("general") );
+
+  // Neutron Physics
+  RegisterPhysics( new G4HadronPhysicsQGSP_BERT_HP());
+  //RegisterPhysics( new G4HadronPhysicsQGSP_BIC_AllHP());
 
   // EM Physics
   RegisterPhysics( new LXeEMPhysics("standard EM"));
@@ -68,7 +73,7 @@ LXePhysicsList::LXePhysicsList() : G4VModularPhysicsList()
   opticalPhysics->SetMaxNumPhotonsPerStep(100);
   opticalPhysics->SetMaxBetaChangePerStep(10.0);
 
-  opticalPhysics->SetTrackSecondariesFirst(kCerenkov,true);
+  opticalPhysics->SetTrackSecondariesFirst(kCerenkov, true);
   opticalPhysics->SetTrackSecondariesFirst(kScintillation,true);
 
 }

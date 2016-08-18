@@ -47,9 +47,9 @@ LXePrimaryGeneratorAction::LXePrimaryGeneratorAction(){
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
 
   G4String particleName;
-  fParticleGun->SetParticleDefinition(particleTable->FindParticle(particleName="gamma"));
+  fParticleGun->SetParticleDefinition(particleTable->FindParticle(particleName="neutron"));
   //Default energy,position,momentum
-  fParticleGun->SetParticleEnergy(100.*keV);
+  fParticleGun->SetParticleEnergy(1000.*keV);
   fParticleGun->SetParticlePosition(G4ThreeVector(0.0 , 0.0, -20.0*cm));
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
 }

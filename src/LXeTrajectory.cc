@@ -138,6 +138,9 @@ void LXeTrajectory::DrawTrajectory() const
         colour = G4Colour(0.,1.,0.);
       //}
     }
+    else if (fParticleDefinition==G4Neutron::NeutronDefinition()) {
+      colour = G4Colour(0.,1.,1.);
+    }
     else //All other particles are blue
       colour = G4Colour(0.,0.,1.);
 
