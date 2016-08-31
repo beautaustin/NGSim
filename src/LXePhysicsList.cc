@@ -65,7 +65,7 @@ LXePhysicsList::LXePhysicsList() : G4VModularPhysicsList()
   G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
   RegisterPhysics( opticalPhysics );
 
-  opticalPhysics->SetWLSTimeProfile("delta");
+  //opticalPhysics->SetWLSTimeProfile("delta");
 
   opticalPhysics->SetScintillationYieldFactor(1.0);
   opticalPhysics->SetScintillationExcitationRatio(0.0);
@@ -74,7 +74,7 @@ LXePhysicsList::LXePhysicsList() : G4VModularPhysicsList()
   opticalPhysics->SetMaxBetaChangePerStep(10.0);
 
   opticalPhysics->SetTrackSecondariesFirst(kCerenkov, true);
-  opticalPhysics->SetTrackSecondariesFirst(kScintillation,true);
+  opticalPhysics->SetTrackSecondariesFirst(kScintillation, false);
 
 }
 

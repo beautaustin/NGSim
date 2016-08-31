@@ -31,6 +31,9 @@
 //
 #include "LXeRunAction.hh"
 #include "LXeRecorderBase.hh"
+#include "G4SystemOfUnits.hh"
+
+#include "LXeAnalysis.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -44,10 +47,29 @@ LXeRunAction::~LXeRunAction() {}
 
 void LXeRunAction::BeginOfRunAction(const G4Run* aRun){
   if(fRecorder)fRecorder->RecordBeginOfRun(aRun);
+
+  G4AnalysisManager *AnalysisMan = G4AnalysisManager::Instance();
+
+  AnalysisMan->OpenFile("OutputData");
+
+  AnalysisMan->CreateH1("0", "Hit X Position", 300, -0.15*m, 0.15*m);
+  AnalysisMan->CreateH1("1", "Hit Y Position", 300, -0.15*m, 0.15*m);
+  AnalysisMan->CreateH1("2", "Hit Z Position", 300, -0.15*m, 0.15*m);
+
+  AnalysisMan->CreateNtuple("HitPosition", "Hits Position");
+  AnalysisMan->CreateNtupleDColumn("Xpos");
+  AnalysisMan->CreateNtupleDColumn("Ypos");
+  AnalysisMan->CreateNtupleDColumn("Zpos");
+  AnalysisMan->CreateNtupleDColumn("TrackID");
+  AnalysisMan->FinishNtuple();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void LXeRunAction::EndOfRunAction(const G4Run* aRun){
   if(fRecorder)fRecorder->RecordEndOfRun(aRun);
+
+  G4AnalysisManager *AnalysisMan = G4AnalysisManager::Instance();
+  AnalysisMan->Write();
+  AnalysisMan->CloseFile();
 }

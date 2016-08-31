@@ -52,6 +52,8 @@
 #include "G4ParticleDefinition.hh"
 #include "G4ParticleTypes.hh"
 
+#include "LXeAnalysis.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 LXeSteppingAction::LXeSteppingAction(LXeRecorderBase* r)
@@ -145,9 +147,10 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
     //if(thePrePV->GetName()=="Slab")
       //force drawing of photons in WLS slab
       //trackInformation->SetForceDrawTrajectory(true);
-    /*else */if(thePostPV->GetName()=="expHall")
+    /*else if(thePostPV->GetName()=="expHall")
       //Kill photons entering expHall from something other than Slab
       theTrack->SetTrackStatus(fStopAndKill);
+      */
 
     //Was the photon absorbed by the absorption process
     if(thePostPoint->GetProcessDefinedStep()->GetProcessName()
@@ -176,13 +179,19 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
       fExpectedNextStatus=Undefined;
       switch(boundaryStatus){
       case Absorption:
+      {
+        //FillHistogram(theStep);
+        FillNtuple(theStep);
         trackInformation->AddTrackStatusFlag(boundaryAbsorbed);
         eventInformation->IncBoundaryAbsorption();
         break;
+      }
       case Detection: //Note, this assumes that the volume causing detection
                       //is the photocathode because it is the only one with
                       //non-zero efficiency
         {
+          //FillHistogram(theStep);
+          FillNtuple(theStep);
         //Triger sensitive detector manually since photon is
         //absorbed but status was Detection
         G4SDManager* SDman = G4SDManager::GetSDMpointer();
@@ -192,22 +201,46 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
         trackInformation->AddTrackStatusFlag(hitPMT);
         break;
         }
-      case FresnelReflection:
-      case TotalInternalReflection:
-      case LambertianReflection:
-      case LobeReflection:
-      case SpikeReflection:
+      case FresnelReflection: FillNtuple(theStep);
+      case TotalInternalReflection: FillNtuple(theStep);
+      case LambertianReflection: FillNtuple(theStep);
+      case LobeReflection: FillNtuple(theStep);
+      case SpikeReflection: FillNtuple(theStep);
       case BackScattering:
+      {
+        //FillHistogram(theStep);
+        FillNtuple(theStep);
         trackInformation->IncReflections();
         fExpectedNextStatus=StepTooSmall;
         break;
+      }
       default:
         break;
       }
-      if(thePostPV->GetName()=="sphere")
-        trackInformation->AddTrackStatusFlag(hitSphere);
+      //if(thePostPV->GetName()=="sphere")
+        //trackInformation->AddTrackStatusFlag(hitSphere);
     }
   }
 
   if(fRecorder)fRecorder->RecordStep(theStep);
+}
+
+void LXeSteppingAction::FillHistogram(const G4Step *theStep) {
+  G4AnalysisManager *AnalysisMan = G4AnalysisManager::Instance();
+  G4Track* theTrack = theStep->GetTrack();
+
+  AnalysisMan->FillH1(0, theTrack->GetPosition().getX());
+  AnalysisMan->FillH1(1, theTrack->GetPosition().getY());
+  AnalysisMan->FillH1(2, theTrack->GetPosition().getZ());
+}
+
+void LXeSteppingAction::FillNtuple(const G4Step *theStep) {
+  G4AnalysisManager *AnalysisMan = G4AnalysisManager::Instance();
+  G4Track* theTrack = theStep->GetTrack();
+
+  AnalysisMan->FillNtupleDColumn(0, theTrack->GetPosition().getX());
+  AnalysisMan->FillNtupleDColumn(1, theTrack->GetPosition().getY());
+  AnalysisMan->FillNtupleDColumn(2, theTrack->GetPosition().getZ());
+  AnalysisMan->FillNtupleDColumn(3, theTrack->GetTrackID());
+  AnalysisMan->AddNtupleRow();
 }

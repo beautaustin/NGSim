@@ -51,7 +51,9 @@ class LXeSteppingAction : public G4UserSteppingAction
 
     void SetOneStepPrimaries(G4bool b){fOneStepPrimaries=b;}
     G4bool GetOneStepPrimaries(){return fOneStepPrimaries;}
- 
+    void FillHistogram(const G4Step*);
+    void FillNtuple(const G4Step*);
+
   private:
 
     LXeRecorderBase* fRecorder;
