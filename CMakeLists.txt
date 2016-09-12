@@ -14,20 +14,17 @@ if(WITH_GEANT4_UIVIS)
 else()
   find_package(Geant4 REQUIRED)
 endif()
-find_package(ROOT REQUIRED)
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 #
 include(${Geant4_USE_FILE})
-include(${ROOT_USE_FILE})
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
 include_directories(${PROJECT_SOURCE_DIR}/include
-                    ${Geant4_INCLUDE_DIR}
-                    ${ROOT_INCLUDE_DIR})
+                    ${Geant4_INCLUDE_DIR})
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
@@ -35,11 +32,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(LXe LXe.cc ${sources} ${headers})
-target_link_libraries(LXe ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
-target_link_libraries(LXe /home/dphan/ROOT-system/root-5.34.34/lib/libHist.so)
-target_link_libraries(LXe /home/dphan/ROOT-system/root-5.34.34/lib/libTree.so)
-target_link_libraries(LXe /home/dphan/ROOT-system/root-5.34.34/lib/libCore.so)
-target_link_libraries(LXe /home/dphan/ROOT-system/root-5.34.34/lib/libRIO.so)
+target_link_libraries(LXe ${Geant4_LIBRARIES})
+
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build LXe. This is so that we can run the executable directly because it
