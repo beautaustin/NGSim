@@ -139,7 +139,7 @@ void LXeSteppingAction::UserSteppingAction(const G4Step * theStep){
     fExpectedNextStatus=Undefined;
     return;
   }
-
+//tracking photon
   G4ParticleDefinition* particleType = theTrack->GetDefinition();
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
     //Optical photon only

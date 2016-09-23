@@ -175,7 +175,7 @@ void LXeDetectorConstruction::DefineMaterials() {
   G4double glass_AbsLength[]={420.*cm,420.*cm,420.*cm};
   assert(sizeof(glass_AbsLength) == sizeof(lxe_Energy));
   G4MaterialPropertiesTable *glass_mt = new G4MaterialPropertiesTable();
-  glass_mt->AddProperty("ABSLENGTH",lxe_Energy,glass_AbsLength,lxenum);
+  glass_mt->AddProperty("ABSLENGTH",lxe_Energy,glass_AbsLength,lxenum); // Fix lxe_Energy
   glass_mt->AddProperty("RINDEX",lxe_Energy,glass_RIND,lxenum);
   fGlass->SetMaterialPropertiesTable(glass_mt);
 

@@ -52,15 +52,13 @@ LXePrimaryGeneratorAction::LXePrimaryGeneratorAction(){
   fParticleGun->SetParticleEnergy(1000.*keV);
   fParticleGun->SetParticlePosition(G4ThreeVector(0.0 , 0.0, -20.0*cm));
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
-}
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
+}
 LXePrimaryGeneratorAction::~LXePrimaryGeneratorAction(){
     delete fParticleGun;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oOO0OOooo......
 
 void LXePrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent){
   fParticleGun->GeneratePrimaryVertex(anEvent);
